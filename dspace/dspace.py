@@ -1,9 +1,10 @@
 #! /usr/bin/env python3
 
+from pprint import pprint
+
 import click
 
 from dspace.controller import DSpaceController
-from pprint import pprint
 
 controller = DSpaceController()
 
@@ -66,9 +67,9 @@ def snapshot(name, snapshot_name):
 
 
 @cli.command()
-@click.argument('NAME')
-@click.option('--tool', default='liquibase', help="Migration tool to use")
-@click.option('--folder', help="Folder to read migrations from")
+@click.argument("NAME")
+@click.option("--tool", default="liquibase", help="Migration tool to use")
+@click.option("--folder", help="Folder to read migrations from")
 def migrate(name, tool, folder):
     """
     Run database migrations against the dataspace
@@ -77,15 +78,16 @@ def migrate(name, tool, folder):
 
 
 @cli.command()
-@click.argument('NAME')
-@click.option('--to', help="Snapshot to roll back to")
+@click.argument("NAME")
+@click.option("--to", help="Snapshot to roll back to")
 def rollback(name, to):
     """
     Roll back to a previous snapshot of the database
     """
 
+
 @cli.command()
-@click.argument('NAME')
+@click.argument("NAME")
 def list_snapshots(name):
     """
     List snapshots that exist for the dataspace.
@@ -93,8 +95,8 @@ def list_snapshots(name):
 
 
 @cli.command()
-@click.argument('FROM_NAME')
-@click.argument('TO_NAME')
+@click.argument("FROM_NAME")
+@click.argument("TO_NAME")
 def copy(from_name, to_name):
     """
     Duplicate the dataspace to a new throwaway container

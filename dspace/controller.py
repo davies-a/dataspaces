@@ -1,5 +1,5 @@
-from dspace.config import ConfigStore
 from dspace.client import DockerClient
+from dspace.config import ConfigStore
 
 
 class DSpaceController:
