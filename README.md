@@ -33,7 +33,7 @@ $ dspace snapshot mydb snapshot-1 --comment 'before migrations'
 
 $ dspace migrate mydb --tool liquibase --folder migrations/*
 
-$ dspace mydb rollback --to snapshot-1
+$ dspace rollback mydb --to snapshot-1
 
 $ dspace copy mydb newdb 
 
