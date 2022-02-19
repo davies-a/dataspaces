@@ -3,9 +3,9 @@ Ephemeral Databases for Development
 
 ## The pitch
 
-All too often we want to run code against a dev database, when we aren't sure it will work.
+All too often we want to run code against a dev database, when we aren't sure that code will do what we want.
 
-But dev databases are often full-scale replicas of production databases, making restoring from backups expensive. 
+But dev databases are often replicas of production databases, making restoring from backups expensive. 
 
 Also in the modern world our dev databases are cloud based; meaning proxies, VPNs, and so on need setting up. 
 
@@ -17,11 +17,13 @@ Thankfully, Docker exists, and has lots of tools for this very purpose.
 
 This utility allows you to create a local database for development; snapshot it; run migrations against it; pause it; and roll it back. 
 
-Think of it as Python virtual environments with a docker spin. 
+Think of it as Python virtual environments with a Docker spin. 
 
 ## Ok great, where do I start?
 
-Install the repo
+Install the repo; then use commands like the following:
+
+```bash
 
 $ dspace setup
 
@@ -34,3 +36,5 @@ $ dspace migrate mydb --tool liquibase --folder migrations/*
 $ dspace mydb rollback --to snapshot-1
 
 $ dspace copy mydb newdb 
+
+```
