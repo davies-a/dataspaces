@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v2
-    - run: pip install black isort
+    - run: pip install black isort pytest pytest-mock -r requirements.txt
     - run: black --check . --diff
     - name: If needed, commit black changes to a new pull request
       if: failure()
@@ -22,3 +22,6 @@ jobs:
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         git commit -am "actions: auto-fmt"
         git push --force origin HEAD:$GITHUB_REF
+    - name: run tests
+      run: |
+        python -m pytest test
