@@ -1,0 +1,108 @@
+[tool.black]
+line-length = 88
+target-version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+(
+    /(
+        \.eggs
+      | \.git
+      | \.hg
+      | \.mypy_cache
+      | \.tox
+      | \.venv
+      | _build
+      | buck-out
+      | build
+      | dist
+      | venv
+      | \S+_pb2\.py
+      | \S+_pb2_grpc\.py
+      | .*_pb2.py
+    )/
+    | \w*_pb2\w*\.py
+)
+'''
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 120
+skip_glob=[
+    ".eggs/**",
+   ".git/*",
+   ".hg/*",
+   ".mypy_cache/*",
+   ".tox/*",
+   ".venv/*",
+   "_build/*",
+   "buck-out/*",
+   "build/*",
+   "dist/*",
+   "docs/source/conf.py",
+    "__pycache__",
+    "venv/*",
+    "*_pb2"
+]
+
+[tool.pylint.message_control]
+confidence="HIGH, INFERENCE, INFERENCE_FAILURE, UNDEFINED"
+enable=""
+disable="""
+    bad-continuation,
+    no-else-return,
+    too-few-public-methods,
+    import-error,
+    no-name-in-module,
+    missing-module-docstring,
+    missing-class-docstring,
+"""
+
+[tool.pylint.basic]
+argument-naming-style="snake_case"
+attr-naming-style="snake_case"
+class-attribute-naming-style="any"
+class-naming-style="PascalCase"
+const-naming-style="UPPER_CASE"
+function-naming-style="snake_case"
+inlinevar-naming-style="snake_case"
+method-naming-style="snake_case"
+module-naming-style="snake_case"
+variable-naming-style="snake_case"
+good-names="i,j,k,_,df,e,d,wb"
+bad-names="foo,bar,baz,toto,tutu,tata"
+bad-names-rgxs=""
+docstring-min-length="7"
+include-naming-hint="no"
+name-group=""
+no-docstring-rgx="^_"
+property-classes="abc.abstractproperty"
+
+[tool.pylint.format]
+expected-line-ending-format="LF"
+indent-after-paren="4"
+indent-string="    "
+max-line-length="88"
+ignore-long-lines="^\\s*(# )?<?https?://\\S+>?$"
+no-space-check="trailing-comma"
+single-line-class-stmt="no"
+single-line-if-stmt="no"
+max-module-lines="1000"
+
+[tool.pylint.string]
+check-quote-consistency="yes"
+check-str-concat-over-line-jumps="yes"
+
+[tool.pylint.imports]
+allow-any-import-level=""
+allow-wildcard-with-all="no"
+analyse-fallback-blocks="no"
+deprecated-modules="optparse,tkinter.tix"
+ext-import-graph=""
+import-graph=""
+int-import-graph=""
+known-standard-library=""
+known-third-party="enchant"
+preferred-modules=""
