@@ -18,3 +18,5 @@ requirements:
 		-r requirements.txt \
 		--ignore-installed
 
+tests:
+	python -m pytest
