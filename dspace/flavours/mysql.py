@@ -22,4 +22,6 @@ class MySQLFlavour(Flavour):
         "mysqladmin ping --host=localhost --user=${MYSQL_USER} --password=${MYSQL_PASSWORD} --silent"
     ]
 
-    repl_command = "'mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h localhost -D${MYSQL_DATABASE}'"
+    repl_command = (
+        "'mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h localhost -D${MYSQL_DATABASE}'"
+    )

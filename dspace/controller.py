@@ -1,10 +1,10 @@
 import os
-
 from typing import Dict
 
 from dspace.client import DockerClient
 from dspace.config import ConfigStore
 from dspace.flavours import Flavour, flavour_map
+
 
 class DSpaceController:
     """
@@ -23,17 +23,18 @@ class DSpaceController:
     def get_space_flavour(self, space_name):
         container_name = f"{self._container_name_prefix}{space_name}"
         container = self.docker_client.get_container(container_name)
-        assert container, \
-            f'There was no container with the name {container_name}'
+        assert container, f"There was no container with the name {container_name}"
 
-        image_name = container.attrs['Config']['Image']
+        image_name = container.attrs["Config"]["Image"]
         flavour_filtered = [
-            flavour for flavour in self._db_flavours.values() \
+            flavour
+            for flavour in self._db_flavours.values()
             if flavour.container_image == image_name
         ]
 
-        assert flavour_filtered, \
-               f'There is no space flavour matching the image {image_name}'
+        assert (
+            flavour_filtered
+        ), f"There is no space flavour matching the image {image_name}"
 
         return flavour_filtered[0]
 
@@ -91,7 +92,7 @@ class DSpaceController:
         self.docker_client.killall()
 
     def spawn_shell(self, space_name: str):
-        cmd = f'docker exec -it {self._container_name_prefix}{space_name} /bin/bash'
+        cmd = f"docker exec -it {self._container_name_prefix}{space_name} /bin/bash"
         os.system(cmd)
 
     def dba(self, space_name: str):
