@@ -21,3 +21,5 @@ class PostgresFlavour(Flavour):
     healthcheck_command = ["pg_isready"]
 
     repl_command = "'psql --user=${POSTGRES_USER} --host=localhost ${POSTGRES_DB}'"
+
+    volume_directory = '/var/lib/postgresql/data'

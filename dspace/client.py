@@ -45,6 +45,7 @@ class DockerClient:
         database: str,
         user: str,
         password: str,
+        volume_directory: str
     ):
         healthcheck_nanoseconds = 10 * 1000 * 1000 * 1000
 
@@ -67,6 +68,12 @@ class DockerClient:
                 "timeout": healthcheck_nanoseconds,
                 "retries": 5,
             },
+            volumes={
+                volume_directory: {
+                    'bind':flavour.volume_directory,
+                    'mode':'rw',
+                },
+            }
         )
 
     def kill_container(self, name: str):
@@ -84,3 +91,6 @@ class DockerClient:
     def killall(self):
         for container in self.list_containers(active_only=False):
             self.kill_container(container.id)
+
+    def create_snapshot(self, container_name: str, snapshot_name: str):
+        pass

@@ -46,7 +46,6 @@ class DSpaceController:
         """
         Load the file-based DSpace configuration
         """
-
         self._config = ConfigStore.get_or_create()
 
     def create(
@@ -62,6 +61,10 @@ class DSpaceController:
 
         container_name = f"{self._container_name_prefix}{space_name}"
 
+        volume_directory = os.path.join(self._config._config_folder, 'volumes', space_name)
+        if not os.path.exists(volume_directory):
+            os.makedirs(volume_directory, exist_ok=True)
+
         self.docker_client.create_container(
             name=container_name,
             expose_port=expose_port,
@@ -69,6 +72,7 @@ class DSpaceController:
             database=initial_database,
             user=self._config.default_user,
             password=self._config.default_password,
+            volume_directory=volume_directory
         )
 
     def kill(self, space_name: str):

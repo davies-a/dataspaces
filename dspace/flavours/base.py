@@ -24,3 +24,5 @@ class Flavour(ABC):
     healthcheck_command: List[str]
 
     repl_command: str
+
+    volume_directory: str

@@ -25,3 +25,5 @@ class MySQLFlavour(Flavour):
     repl_command = (
         "'mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h localhost -D${MYSQL_DATABASE}'"
     )
+
+    volume_directory = '/var/lib/mysql'
