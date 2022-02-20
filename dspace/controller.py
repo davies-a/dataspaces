@@ -2,7 +2,7 @@ from typing import Dict
 
 from dspace.client import DockerClient
 from dspace.config import ConfigStore
-from dspace.flavours import flavour_map, Flavour
+from dspace.flavours import Flavour, flavour_map
 
 
 class DSpaceController:
@@ -30,7 +30,9 @@ class DSpaceController:
 
         self._config = ConfigStore.get_or_create()
 
-    def create(self, space_name: str, expose_port: int, flavour: str, initial_database: str):
+    def create(
+        self, space_name: str, expose_port: int, flavour: str, initial_database: str
+    ):
         assert (
             flavour in self._db_flavours
         ), f"That database flavour was not supported. Accepted flavours: {self._db_flavours.keys()}"

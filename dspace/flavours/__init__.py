@@ -1,6 +1,6 @@
 from dspace.flavours.base import Flavour
-from dspace.flavours.postgres import PostgresFlavour
 from dspace.flavours.mysql import MySQLFlavour
+from dspace.flavours.postgres import PostgresFlavour
 
 flavours = [
     PostgresFlavour,

@@ -34,7 +34,7 @@ class DockerClient:
         flavour: Flavour,
         database: str,
         user: str,
-        password: str
+        password: str,
     ):
         healthcheck_nanoseconds = 10 * 1000 * 1000 * 1000
 
@@ -52,10 +52,10 @@ class DockerClient:
                 **flavour.environment_variables,
             },
             healthcheck={
-                'test': ['CMD-SHELL', *flavour.healthcheck_command],
-                'interval': healthcheck_nanoseconds,
-                'timeout': healthcheck_nanoseconds,
-                'retries': 5,
+                "test": ["CMD-SHELL", *flavour.healthcheck_command],
+                "interval": healthcheck_nanoseconds,
+                "timeout": healthcheck_nanoseconds,
+                "retries": 5,
             },
         )
 

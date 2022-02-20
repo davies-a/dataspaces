@@ -1,11 +1,13 @@
 from abc import ABC
 from typing import Dict, List
 
+
 class Flavour(ABC):
     """
     Database flavour configuration
 
     """
+
     name: str
 
     container_image: str
