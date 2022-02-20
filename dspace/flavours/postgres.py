@@ -15,7 +15,7 @@ class PostgresFlavour(Flavour):
 
     database_schema = "postgresql"
     initial_user_variable = "POSTGRES_USER"
-    initial_password_variable = "POSTGRES_DB"
-    initial_database_variable = "POSTGRES_PASSWORD"
+    initial_password_variable = "POSTGRES_PASSWORD"
+    initial_database_variable = "POSTGRES_DB"
 
     healthcheck_command = ["pg_isready"]
