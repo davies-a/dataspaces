@@ -19,3 +19,5 @@ class PostgresFlavour(Flavour):
     initial_database_variable = "POSTGRES_DB"
 
     healthcheck_command = ["pg_isready"]
+
+    repl_command = "'psql --user=${POSTGRES_USER} --host=localhost ${POSTGRES_DB}'"

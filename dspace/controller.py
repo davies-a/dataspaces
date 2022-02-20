@@ -1,3 +1,4 @@
+import os
 from typing import Dict
 
 from dspace.client import DockerClient
@@ -18,6 +19,24 @@ class DSpaceController:
 
     def __init__(self) -> None:
         self.docker_client = DockerClient()
+
+    def get_space_flavour(self, space_name):
+        container_name = f"{self._container_name_prefix}{space_name}"
+        container = self.docker_client.get_container(container_name)
+        assert container, f"There was no container with the name {container_name}"
+
+        image_name = container.attrs["Config"]["Image"]
+        flavour_filtered = [
+            flavour
+            for flavour in self._db_flavours.values()
+            if flavour.container_image == image_name
+        ]
+
+        assert (
+            flavour_filtered
+        ), f"There is no space flavour matching the image {image_name}"
+
+        return flavour_filtered[0]
 
     def setup(self):
         self.docker_client.ensure_network_exists()
@@ -71,3 +90,16 @@ class DSpaceController:
 
     def killall(self):
         self.docker_client.killall()
+
+    def spawn_shell(self, space_name: str):
+        cmd = f"docker exec -it {self._container_name_prefix}{space_name} /bin/bash"
+        os.system(cmd)
+
+    def dba(self, space_name: str):
+        flavour = self.get_space_flavour(space_name)
+        cmd = (
+            f"docker exec -it {self._container_name_prefix}{space_name} "
+            f"/bin/bash -c {flavour.repl_command}"
+        )
+
+        os.system(cmd)

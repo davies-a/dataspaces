@@ -27,6 +27,16 @@ class DockerClient:
         else:
             print("A docker network for dspace already exists.")
 
+    def get_container(self, name: str):
+        return self.client.containers.get(name)
+
+    def list_containers(self, active_only):
+        containers = self.client.containers.list(
+            all=not active_only, filters={"label": "DSPACE"}
+        )
+
+        return containers
+
     def create_container(
         self,
         name: str,
@@ -60,23 +70,16 @@ class DockerClient:
         )
 
     def kill_container(self, name: str):
-        container = self.client.containers.get(name)
+        container = self.get_container(name)
         container.remove(force=True)
 
     def pause_container(self, name: str):
-        container = self.client.containers.get(name)
+        container = self.get_container(name)
         container.pause()
 
     def resume_container(self, name: str):
-        container = self.client.containers.get(name)
+        container = self.get_container(name)
         container.unpause()
-
-    def list_containers(self, active_only):
-        containers = self.client.containers.list(
-            all=not active_only, filters={"label": "DSPACE"}
-        )
-
-        return containers
 
     def killall(self):
         for container in self.list_containers(active_only=False):
