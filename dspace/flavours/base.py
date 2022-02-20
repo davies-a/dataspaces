@@ -22,3 +22,5 @@ class Flavour(ABC):
     environment_variables: Dict = {}
 
     healthcheck_command: List[str]
+
+    repl_command: str

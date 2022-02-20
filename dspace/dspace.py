@@ -156,6 +156,21 @@ def killall():
     """
     controller.killall()
 
+@cli.command()
+@click.argument('NAME')
+def shell(name):
+    """
+    Open an interactive Bash shell in the space
+    """
+    controller.spawn_shell(space_name=name)
+
+@cli.command()
+@click.argument('NAME')
+def dba(name):
+    """
+    Open an interactive database REPL.
+    """
+    controller.dba(space_name=name)
 
 if __name__ == "__main__":
     cli()
