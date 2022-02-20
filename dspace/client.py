@@ -1,5 +1,7 @@
 import docker
 
+from dspace.flavours.base import Flavour
+
 
 class DockerClient:
     dspace_network_name = "dspace"
@@ -29,22 +31,31 @@ class DockerClient:
         self,
         name: str,
         expose_port: int,
-        container_image: str,
-        initial_database: str,
-        initial_user: str,
-        initial_password: str,
+        flavour: Flavour,
+        database: str,
+        user: str,
+        password: str
     ):
+        healthcheck_nanoseconds = 10 * 1000 * 1000 * 1000
+
         self.client.containers.run(
-            container_image,
+            flavour.container_image,
             detach=True,
             labels=["DSPACE"],
             name=name,
             network=self.dspace_network_name,
-            ports={"5432/tcp": expose_port},
+            ports={f"{flavour.connector_port}/tcp": expose_port},
             environment={
-                "POSTGRES_DB": initial_database,
-                "POSTGRES_USER": initial_user,
-                "POSTGRES_PASSWORD": initial_password.get_secret_value(),
+                flavour.initial_user_variable: user,
+                flavour.initial_database_variable: database,
+                flavour.initial_password_variable: password.get_secret_value(),
+                **flavour.environment_variables,
+            },
+            healthcheck={
+                'test': ['CMD-SHELL', *flavour.healthcheck_command],
+                'interval': healthcheck_nanoseconds,
+                'timeout': healthcheck_nanoseconds,
+                'retries': 5,
             },
         )
 

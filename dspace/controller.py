@@ -1,5 +1,8 @@
+from typing import Dict
+
 from dspace.client import DockerClient
 from dspace.config import ConfigStore
+from dspace.flavours import flavour_map, Flavour
 
 
 class DSpaceController:
@@ -11,7 +14,7 @@ class DSpaceController:
 
     _container_name_prefix: str = "dspace_"
 
-    _db_flavours = {"postgres": "postgres:14"}
+    _db_flavours: Dict[str, Flavour] = flavour_map
 
     def __init__(self) -> None:
         self.docker_client = DockerClient()
@@ -27,24 +30,24 @@ class DSpaceController:
 
         self._config = ConfigStore.get_or_create()
 
-    def create(self, space_name, expose_port, flavour, initial_database):
+    def create(self, space_name: str, expose_port: int, flavour: str, initial_database: str):
         assert (
             flavour in self._db_flavours
         ), f"That database flavour was not supported. Accepted flavours: {self._db_flavours.keys()}"
 
         self.load_config()
 
-        db_image = self._db_flavours[flavour]
+        flavour = self._db_flavours[flavour]
 
         container_name = f"{self._container_name_prefix}{space_name}"
 
         self.docker_client.create_container(
             name=container_name,
             expose_port=expose_port,
-            container_image=db_image,
-            initial_database=initial_database,
-            initial_user=self._config.default_user,
-            initial_password=self._config.default_password,
+            flavour=flavour,
+            database=initial_database,
+            user=self._config.default_user,
+            password=self._config.default_password,
         )
 
     def kill(self, space_name: str):
@@ -61,7 +64,7 @@ class DSpaceController:
         container_name = f"{self._container_name_prefix}{space_name}"
         self.docker_client.resume_container(name=container_name)
 
-    def list_dataspaces(self, active_only):
+    def list_dataspaces(self, active_only: bool = False):
         return self.docker_client.list_containers(active_only)
 
     def killall(self):
