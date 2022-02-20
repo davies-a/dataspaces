@@ -40,8 +40,8 @@ def setup():
 )
 @click.option(
     "--initial-database",
-    default="public",
-    help="Initial database to bootstrap for the dataspace. Default: public",
+    default="db",
+    help="Initial database to bootstrap for the dataspace. Default: db",
 )
 def create(name: str, flavour: str, expose_port: int, initial_database: str):
     """
