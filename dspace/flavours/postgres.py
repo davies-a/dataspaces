@@ -9,7 +9,7 @@ class PostgresFlavour(Flavour):
 
     name = "postgres"
 
-    container_image = "postgres:14"
+    container_image = "postgres:14-bullseye"
 
     connector_port = 5432
 
@@ -22,4 +22,4 @@ class PostgresFlavour(Flavour):
 
     repl_command = "'psql --user=${POSTGRES_USER} --host=localhost ${POSTGRES_DB}'"
 
-    volume_directory = '/var/lib/postgresql/data'
+    volume_directory = "/var/lib/postgresql/data"

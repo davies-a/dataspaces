@@ -1,4 +1,4 @@
-from dspace.flavours import Flavour
+from dspace.flavours.base import Flavour
 
 
 class MySQLFlavour(Flavour):
@@ -26,4 +26,4 @@ class MySQLFlavour(Flavour):
         "'mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h localhost -D${MYSQL_DATABASE}'"
     )
 
-    volume_directory = '/var/lib/mysql'
+    volume_directory = "/var/lib/mysql"
