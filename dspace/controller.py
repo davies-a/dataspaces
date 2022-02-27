@@ -1,7 +1,7 @@
 import os
+import shutil
 import subprocess
 from typing import Dict, Optional
-import shutil
 
 from dspace.client import DockerClient
 from dspace.config import ConfigStore
