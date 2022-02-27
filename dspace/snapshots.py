@@ -76,9 +76,3 @@ class SnapshotController:
         cursor.execute(f"DELETE FROM snapshots where name=?", (name,))
         self.db_conn.commit()
         cursor.close()
-
-    def delete_all_snapshots(self, name: str):
-        cursor = self.db_conn.cursor()
-        cursor.execute(f"DELETE FROM snapshots")
-        self.db_conn.commit()
-        cursor.close()
