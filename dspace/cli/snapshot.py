@@ -48,7 +48,9 @@ class SnapshotRouter(RouterBase):
         default="db",
         help="Initial database to bootstrap for the dataspace. Default: db",
     )
-    def create_from_snapshot(snapshot_name, space_name, expose_port, flavour, database_name):
+    def create_from_snapshot(
+        snapshot_name, space_name, expose_port, flavour, database_name
+    ):
         """
         Create a DSpace from a snapshot.
         """
