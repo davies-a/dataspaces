@@ -1,6 +1,7 @@
 import os
 import subprocess
 from typing import Dict, Optional
+import shutil
 
 from dspace.client import DockerClient
 from dspace.config import ConfigStore
@@ -149,6 +150,11 @@ class DSpaceController:
         finally:
             print(f"Resuming space: {space_name}")
             self.resume(space_name=space_name)
+
+    def delete_snapshot(self, snapshot_name):
+        snapshot_directory = self.get_snapshot_directory(snapshot_name=snapshot_name)
+        shutil.rmtree(snapshot_directory)
+        self._snapshot_controller.delete_snapshot(snapshot_name)
 
     def create_from_snapshot(
         self,

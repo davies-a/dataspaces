@@ -27,6 +27,9 @@ class SnapshotRouter(RouterBase):
     @click.argument("FROM_NAME")
     @click.argument("TO_NAME")
     def copy_snapshot(from_name: str, to_name: str):
+        """
+        Duplicate a snapshot to create an identical one.
+        """
         DSpaceController().duplicate_snapshot(from_name=from_name, to_name=to_name)
 
     @staticmethod
@@ -45,7 +48,10 @@ class SnapshotRouter(RouterBase):
         default="db",
         help="Initial database to bootstrap for the dataspace. Default: db",
     )
-    def copy_snapshot(snapshot_name, space_name, expose_port, flavour, database_name):
+    def create_from_snapshot(snapshot_name, space_name, expose_port, flavour, database_name):
+        """
+        Create a DSpace from a snapshot.
+        """
         DSpaceController().create_from_snapshot(
             snapshot_name=snapshot_name,
             space_name=space_name,
@@ -53,3 +59,13 @@ class SnapshotRouter(RouterBase):
             flavour=flavour,
             database_name=database_name,
         )
+
+    @staticmethod
+    @click.argument("SNAPSHOT_NAME")
+    def delete_snapshot(snapshot_name: str):
+        """Delete a snapshot.
+
+        Args:
+            snapshot_name (str): Name of the snapshot to delete.
+        """
+        DSpaceController().delete_snapshot(snapshot_name=snapshot_name)
